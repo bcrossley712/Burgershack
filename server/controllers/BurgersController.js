@@ -8,8 +8,9 @@ export class BurgersController extends BaseController {
     super('api/burgers')
     this.router
       .get('', this.getAll)
+      .get('/id', this.getById)
       .post('', this.create)
-      .delete('/:burgerId', this.removeBurger)
+      .delete('/:burgerId', this.remove)
   }
 
   async getAll(req, res, next) {
@@ -29,12 +30,15 @@ export class BurgersController extends BaseController {
       next(error)
     }
   }
-  async removeBurger(req, res, next) {
+  async remove(req, res, next) {
     try {
-      const removedBurger = await burgersService.removeBurger(req.params.burgerId)
+      const removedBurger = await burgersService.remove(req.params.burgerId)
       return res.send(removedBurger)
     } catch (error) {
       next(error)
     }
+  }
+  async getById(req, res, next) {
+
   }
 }
